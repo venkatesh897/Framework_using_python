@@ -1,4 +1,4 @@
-#Program to do CRUD operations for any domain
+#Framework to perform CRUD operations
 
 menu_file = "Menu.cfg"
 fields_file = "fields_file.cfg"
@@ -13,11 +13,16 @@ f_menu.close()
 with open(fields_file) as f_fields:
 	field_names = f_fields.readlines()
 f_fields.close()
-
-with open(data_file, 'r') as f_data:
-	record = f_data.read();
-f_data.close()
-records = eval(record)
+try:
+	with open(data_file, 'r') as f_data:
+		record = f_data.read();
+	f_data.close()
+	records = eval(record)
+except Exception:
+	with open(data_file, 'w') as f_data:
+		records = []
+		f_data.write(str(records));
+	f_data.close()
 
 
 
@@ -26,7 +31,7 @@ def create_record():
 	record_status = 'A'
 	field_values.append(record_status)
 	for field_name in field_names:
-		print(field_name.rstrip() + ": ", end = "")
+		print(field_name.rstrip() + ":", end = "")
 		field_value = input()
 		field_values.append(field_value)
 	records.append(field_values)
@@ -110,7 +115,7 @@ def search_record():
 def print_record(field_value):
 	index = 1
 	for field_name in field_names:
-		print(field_name.rstrip() + ": ", end = "")
+		print(field_name.rstrip() + ":", end = "")
 		print(field_value[index])
 		index = index + 1
 
@@ -119,6 +124,8 @@ functionsList = [create_record, read_records, update_record, delete_record, sear
 
 while True:
 	print(menu)
-	user_input = input("Enter you input: ")
-	user_input = int(user_input)
-	functionsList[user_input - 1]()
+	user_input = int(input("Enter you input: "))
+	if user_input > 0 and user_input <= 6:
+		functionsList[user_input - 1]()
+	else:
+		print("INVALID INPUT")
