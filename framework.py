@@ -75,7 +75,7 @@ def update_record():
 				user_option = int(input("Enter option: "))
 			except Exception:
 				print("Invalid option")
-			print("Enter " + field_names[eval(list_of_updatable_fields[user_option - 1]) - 1].rstrip() + "to update: ", end = "")
+			print("Enter new " + field_names[eval(list_of_updatable_fields[user_option - 1]) - 1].rstrip() + " to update:", end = "")
 			field_value[eval(list_of_updatable_fields[user_option - 1])] = input()
 			print("Record updated successfully")
 			break
@@ -128,7 +128,10 @@ functionsList = [create_record, read_records, update_record, delete_record, sear
 while True:
 	print(menu)
 	user_input = int(input("Enter you input: "))
-	if user_input > 0 and user_input <= 6:
+	if user_input > 0 and user_input < 6:
+		functionsList[user_input - 1]()
+	elif user_input == 6:
+		print("Thank you.")
 		functionsList[user_input - 1]()
 	else:
 		print("INVALID INPUT")
