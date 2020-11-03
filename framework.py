@@ -27,10 +27,8 @@ try:
 	f_data.close()
 	records = eval(record)
 except Exception:
-	with open(data_file, 'w') as f_data:
-		records = []
-		f_data.write(str(records));
-	f_data.close()
+	records = []
+	save_record()
 
 def create_record():
 	field_values = []
@@ -41,9 +39,7 @@ def create_record():
 		field_value = input()
 		field_values.append(field_value)
 	records.append(field_values)
-	with open(data_file, 'w') as f_data:
-			f_data.write(str(records))
-	f_data.close()
+	save_record()
 	print("----------------")
 	print("Record saved successfully.")
 
@@ -82,9 +78,7 @@ def update_record():
 	if update_record_status == 0:
 		print(record_not_found_error)
 	else:
-		with open(data_file, 'w') as f_data:
-			f_data.write(str(records))
-		f_data.close()
+		save_record()
 
 def delete_record():
 	print("Enter " + field_names[0].rstrip() + ":", end = "")
@@ -99,9 +93,7 @@ def delete_record():
 	if is_deactivated == 0:
 		print(record_not_found_error)
 	else:
-		with open(data_file, 'w') as f_data:
-			f_data.write(str(records))
-		f_data.close()
+		save_record()
 		print("Record deactivated successfully.")
 
 def search_record():
@@ -122,6 +114,12 @@ def print_record(field_value):
 		print(field_name.rstrip() + ":", end = "")
 		print(field_value[index])
 		index = index + 1
+
+def save_record():
+	with open(data_file, 'w') as f_data:
+			f_data.write(str(records))
+	f_data.close()
+
 
 functionsList = [create_record, read_records, update_record, delete_record, search_record, exit]
 
