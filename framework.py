@@ -67,7 +67,6 @@ def search_record():
 def update_record():
 	print("Enter " + field_names[0].rstrip() + ":", end = "")
 	user_input_id = input()
-	is_updated = 0
 	update_record_status = 0
 	with open(updatable_fields, 'r') as f_updatables:
 		list_of_updatable_fields = f_updatables.readlines()
