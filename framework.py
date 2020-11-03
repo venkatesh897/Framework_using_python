@@ -52,11 +52,23 @@ def read_records():
 			count_of_records += 1
 	print('Count of records:', count_of_records)
 
+def search_record():
+	print("Enter " + field_names[0].rstrip() + ":", end = "")
+	user_input_id = input()
+	search_record_status = 0
+	for field_value in records:
+		if field_value[0] == 'A' and field_value[1] == str(user_input_id):
+			search_record_status = 1
+			print_record(field_value)
+			break
+	if search_record_status == 0:
+		print(record_not_found_error)
+
 def update_record():
 	print("Enter " + field_names[0].rstrip() + ":", end = "")
 	user_input_id = input()
 	is_updated = 0
-	updaterecord_status = 0
+	update_record_status = 0
 	with open(updatable_fields, 'r') as f_updatables:
 		list_of_updatable_fields = f_updatables.readlines()
 	f_updatables.close()
@@ -85,7 +97,6 @@ def delete_record():
 	user_input_id = input()
 	is_deactivated = 0
 	for field_values in records:
-		is_deactivated = 1
 		if(field_values[0] == 'A' and field_values[1] == user_input_id):
 			is_deactivated == 1
 			field_values[0] = 'D'
@@ -96,17 +107,6 @@ def delete_record():
 		save_record()
 		print("Record deactivated successfully.")
 
-def search_record():
-	print("Enter " + field_names[0].rstrip() + ":", end = "")
-	user_input_id = input()
-	search_record_status = 0
-	for field_value in records:
-		if field_value[0] == 'A' and field_value[1] == str(user_input_id):
-			search_record_status = 1
-			print_record(field_value)
-			break
-	if search_record_status == 0:
-		print(record_not_found_error)
 
 def print_record(field_value):
 	index = 1
@@ -121,7 +121,7 @@ def save_record():
 	f_data.close()
 
 
-functionsList = [create_record, read_records, update_record, delete_record, search_record, exit]
+functionsList = [create_record, read_records,search_record,  update_record, delete_record, exit]
 
 while True:
 	print(menu)
